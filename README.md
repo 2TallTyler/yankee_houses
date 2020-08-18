@@ -1,6 +1,20 @@
 # Yankee Houses
 A New England-themed house replacement set.
 
+## Coding ideas
+
+#### Road adjacency check
+
+Use one shared switch which controls the template in use. The sprite has already been selected, now choose where on the sprite sheet to draw.
+
+	switch (FEAT_HOUSES, SELF, switch_road_adjacency, ((nearby_tile_class(1,0) == TILE_CLASS_ROAD) * 1) + ((nearby_tile_class(-1,0) == TILE_CLASS_ROAD) * 2) + ((nearby_tile_class(0,1) == TILE_CLASS_ROAD) * 4) + ((nearby_tile_class(0,-1) == TILE_CLASS_ROAD) * 8) ) {
+		0: sprite_no_road // diagonal or otherwise
+		1: template_W;
+		2..3: template_N;
+		4..8: template_E;
+		8..15: template_S;
+	}
+	
 ## Planned houses
 
 ### Residential
