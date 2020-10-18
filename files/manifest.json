@@ -8,8 +8,6 @@
   "sampler": "square",
   "accuracy": 5,
   "overlap": 0,
-  "brightness": -0.05,
-  "contrast": 0.05,
   "size": {
     "x": 64,
     "y": 64,
