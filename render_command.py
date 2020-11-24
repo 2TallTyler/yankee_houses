@@ -3,9 +3,9 @@
 #################################
 
 # Name of NewGRF, as it appears in file names
-name = "r1_fulton_snow"
+name = "c3_international_place_snow"
 
-manifest = "manifest"
+manifest = "manifest_z128"
 
 #################################
 # NO NEED TO CHANGE STUFF BELOW #

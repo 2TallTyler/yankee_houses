@@ -9,7 +9,7 @@ newgrf_name = "yankee_houses"
 header_stuff = ["header", "sprite_templates"]
 
 # Files to place in alphabetical order below
-unordered_stuff = ["r1_fulton"]
+unordered_stuff = ["r1_fulton", "c1_boylston_library", "c1_citgo_station", "c1_industrial_gym", "c3_international_place"]
 
 # Do you want to copy the completed NewGRF to your OpenTTD folder? (True/False)
 copy_bool = True

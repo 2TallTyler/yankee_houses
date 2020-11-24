@@ -8,6 +8,16 @@ template template_z64(x, y) {
     ne: [ x+216,	y,		64,		78,		-31,		-46,	NOCROP | ANIM]
 }
 
+template template_z128(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+    se: [ x,		y,		64,		123,		-31,		-92,	NOCROP | ANIM]
+    sw: [ x+72,		y,		64,		123,		-31,		-92,	NOCROP | ANIM]
+    nw: [ x+144,	y,		64,		123,		-31,		-92,	NOCROP | ANIM]
+    ne: [ x+216,	y,		64,		123,		-31,		-92,	NOCROP | ANIM]
+}
+
+/* Rotation checks for buildings to face roads */
+
 // Bus stops are TILE_CLASS_STATION, not TILE_CLASS_ROAD. If the building is not adjacent to a road (below) it may be adacent to a bus stop which it should face.
 // Note: This will make buildings truly not adjacent to a road, but adjacent to a station (of any type) face the station.
 switch (FEAT_HOUSES, SELF, switch_station_adjacency, 

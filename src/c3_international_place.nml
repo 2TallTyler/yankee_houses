@@ -1,0 +1,58 @@
+
+// Begin c3_international_place
+
+spriteset (spr_c3_international_place, "src/gfx/c3_international_place_8bpp.png") {
+	template_z128(0,0)
+}
+
+spriteset (spr_c3_international_place_snow, "src/gfx/c3_international_place_snow_8bpp.png") {
+	template_z128(0,0)
+}
+
+spritelayout sprlay_c3_international_place_norm {
+	ground {
+		sprite: 1420;
+	}
+	building {
+		sprite: spr_c3_international_place(LOAD_TEMP(1));
+	}
+}
+
+spritelayout sprlay_c3_international_place_snow {
+	ground {
+		sprite: 1420;
+	}
+	building {
+		sprite: spr_c3_international_place_snow(LOAD_TEMP(1));
+	}
+}
+
+switch (FEAT_HOUSES, SELF, switch_c3_international_place_sprites, [ 
+ 	// Check for snow and set the groundsprite in temporary variable 0
+ 	STORE_TEMP(GROUNDSPRITE_NORMAL, 0),
+ 	STORE_TEMP(terrain_type == TILETYPE_SNOW ? GROUNDSPRITE_SNOW : LOAD_TEMP(0), 0),
+	// Check the rotation of the house
+	STORE_TEMP(switch_road_adjacency(), 1),
+	terrain_type == TILETYPE_SNOW])
+	{1: sprlay_c3_international_place_snow; sprlay_c3_international_place_norm;}
+
+item(FEAT_HOUSES, item_c3_international_place, -1, HOUSE_SIZE_1X1){
+	property {
+		substitute: 00;
+		name: TTD_STR_TOWN_BUILDING_NAME_HOUSES_1;
+		population: 0;
+		accepted_cargos: [[PASS, 8],[MAIL, 8]];
+		local_authority_impact: 80;
+		removal_cost_multiplier: 80;
+		probability: 1;
+		years_available: [1904,0xFFFF];
+		building_flags: bitmask(HOUSE_FLAG_PROTECTED);
+		availability_mask: [bitmask(TOWNZONE_CENTRE), ALL_CLIMATES | bitmask(ABOVE_SNOWLINE)];
+		
+		}
+	graphics {
+		default: switch_c3_international_place_sprites;
+	}
+}
+
+// End c3_international_place
