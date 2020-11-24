@@ -1,40 +1,40 @@
 // Begin Sprite Templates
 
-template template_1x_truck(x, y) {
+template template_z64(x, y) {
     //left_x, upper_y, width, height, offset_x, offset_y
-    [ x,		y,		9,		30,		-4,			-20,	ANIM]
-    [ x+17,		y,		26,		27,		-13,		-16,	ANIM]
-    [ x+51,		y,		33,		19,		-13,		-14,	ANIM]
-    [ x+92,		y,		26,		27,		-13,		-17,	ANIM]
-    [ x+126,	y,		9,		30,		-4,			-20,	ANIM]
-    [ x+143,	y,		26,		24,		-14,		-16,	ANIM]
-    [ x+177,	y,		33,		19,		-16,		-14,	ANIM]
-    [ x+218,	y,		26,		24,		-13,		-17,	ANIM]
+    se: [ x,		y,		64,		78,		-31,		-46,	NOCROP | ANIM]
+    sw: [ x+72,		y,		64,		78,		-31,		-46,	NOCROP | ANIM]
+    nw: [ x+144,	y,		64,		78,		-31,		-46,	NOCROP | ANIM]
+    ne: [ x+216,	y,		64,		78,		-31,		-46,	NOCROP | ANIM]
 }
 
-template template_2x_truck(x, y) {
-    //left_x, upper_y, width, height, offset_x, offset_y
-    [ x,		y,		18,		60,		-8,			-40,	ANIM]
-    [ x+34,		y,		52,		54,		-26,		-32,	ANIM]
-    [ x+102,	y,		66,		38,		-26,		-28,	ANIM]
-    [ x+184,	y,		52,		54,		-26,		-34,	ANIM]
-    [ x+252,	y,		18,		60,		-8,			-40,	ANIM]
-    [ x+286,	y,		52,		48,		-28,		-32,	ANIM]
-    [ x+354,	y,		66,		38,		-32,		-28,	ANIM]
-    [ x+436,	y,		52,		48,		-26,		-34,	ANIM]
+// Bus stops are TILE_CLASS_STATION, not TILE_CLASS_ROAD. If the building is not adjacent to a road (below) it may be adacent to a bus stop which it should face.
+// Note: This will make buildings truly not adjacent to a road, but adjacent to a station (of any type) face the station.
+switch (FEAT_HOUSES, SELF, switch_station_adjacency, 
+		((nearby_tile_class(-1,0) == TILE_CLASS_STATION) * 1) + /*face NE*/
+		((nearby_tile_class(0,-1) == TILE_CLASS_STATION) * 2) + /*face NW*/
+		((nearby_tile_class(1,0) == TILE_CLASS_STATION) * 4) + /* face SW */
+		((nearby_tile_class(0,1) == TILE_CLASS_STATION) * 8) /*face SE*/
+		) {
+			0..1: return 3; // 0 = no road adjacent; diagonal or otherwise
+			2..3: return 2;
+			4..7: return 1;
+			8..16: return 0;
+			0;
 }
 
-template template_4x_truck(x, y) {
-    //left_x, upper_y, width, height, offset_x, offset_y
-    [ x,		y,		36,		120,	-16,		-80,	ANIM]
-    [ x+68,		y,		104,	108,	-52,		-64,	ANIM]
-    [ x+204,	y,		132,	76,		-52,		-56,	ANIM]
-    [ x+368,	y,		104,	108,	-52,		-68,	ANIM]
-    [ x+504,	y,		36,		120,	-16,		-80,	ANIM]
-    [ x+572,	y,		104,	96,		-56,		-64,	ANIM]
-    [ x+708,	y,		132,	76,		-64,		-56,	ANIM]
-    [ x+872,	y,		104,	96,		-52,		-68,	ANIM]
+// Buildings face the road, using animation frames. Buildings adjacent to multiple roads to face the camera.
+switch (FEAT_HOUSES, SELF, switch_road_adjacency, 
+		((nearby_tile_class(0,1) == TILE_CLASS_ROAD) * 8) + /*face SE*/
+		((nearby_tile_class(1,0) == TILE_CLASS_ROAD) * 4) + /* face SW */
+		((nearby_tile_class(0,-1) == TILE_CLASS_ROAD) * 2) + /*face NW*/
+		((nearby_tile_class(-1,0) == TILE_CLASS_ROAD) * 1) /*face NE*/
+		) {
+			1: return 3;
+			2..3: return 2;
+			4..7: return 1;
+			8..15: return 0;
+			switch_station_adjacency; // Bus stops are TILE_CLASS_STATION, not TILE_CLASS_ROAD. If the building is not adjacent to a road (below) it may be adacent to a bus stop which it should face.
 }
-
 
 // End Sprite Templates
