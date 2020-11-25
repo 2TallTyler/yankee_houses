@@ -3,7 +3,7 @@
 #################################
 
 # Name of NewGRF, as it appears in file names
-name = "c3_international_place_snow"
+name = "c3_international_place"
 
 manifest = "manifest_z128"
 
@@ -12,12 +12,16 @@ manifest = "manifest_z128"
 #################################
 
 import subprocess
-import shutil
 
-input_voxel = "voxel/" + name + ".vox"
 manifest_path = "voxel/manifest/" + manifest + ".json"
-output_sprite = "src/gfx/" + name
 
+def render(name):
+    input_voxel = "voxel/" + name + ".vox"
+    output_sprite = "src/gfx/" + name
+    gorender = subprocess.run(["C:/tools/gorender/renderobject.exe", "-input", input_voxel, "-m", manifest_path, "-output", output_sprite, "-8", "-palette", "C:/tools/gorender/files/ttd_palette.json"], stdout = subprocess.PIPE, stderr = subprocess.PIPE, text=True)
+    print(gorender.stdout)
+    print(gorender.stderr)
 
-gorender = subprocess.run(["C:/tools/gorender/renderobject.exe", "-input", input_voxel, "-m", manifest_path, "-output", output_sprite, "-8", "-palette", "C:/tools/gorender/files/ttd_palette.json"], stdout = subprocess.PIPE, text=True)
-print(gorender.stdout)
+# Render sprite varients
+render(name) # regular
+render(name+"_snow") # snow

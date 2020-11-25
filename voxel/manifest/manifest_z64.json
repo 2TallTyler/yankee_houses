@@ -6,8 +6,8 @@
   "soften_edges": 0.5,
   "fade_to_black": false,
   "sampler": "square",
-  "accuracy": 5,
-  "overlap": 0,
+  "accuracy": 10,
+  "overlap": -0.5,
   "size": {
     "x": 64,
     "y": 64,
