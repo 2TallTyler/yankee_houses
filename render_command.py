@@ -3,9 +3,13 @@
 #################################
 
 # Name of NewGRF, as it appears in file names
-name = "c3_international_place"
+name = "slope_test"
 
-manifest = "manifest_z128"
+# Manifest to use
+manifest = "manifest_z64"
+
+# Is there a snow sprite?
+snow = False
 
 #################################
 # NO NEED TO CHANGE STUFF BELOW #
@@ -24,4 +28,5 @@ def render(name):
 
 # Render sprite varients
 render(name) # regular
-render(name+"_snow") # snow
+if snow:
+    render(name+"_snow")
