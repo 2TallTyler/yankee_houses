@@ -3,7 +3,7 @@
 #################################
 
 # Name of NewGRF, as it appears in file names
-name = "slope_test"
+name = "r1_stiles_flipped_snow"
 
 # Manifest to use
 manifest = "manifest_z64"

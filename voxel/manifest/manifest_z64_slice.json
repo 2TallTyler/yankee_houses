@@ -7,7 +7,12 @@
   "fade_to_black": false,
   "sampler": "square",
   "accuracy": 10,
-  "overlap": -0.3,
+  "overlap": -0.5,
+  
+  "slice_threshold": 64,
+  "slice_length": 64,
+  "slice_overlap": 4,
+  
   "size": {
     "x": 64,
     "y": 64,
@@ -17,19 +22,19 @@
   "sprites": [
     { "angle": 45,
       "width": 64,
-	     "flip": true
+	  "slice": -2
     },
-    { "angle": 135,
+    { "angle": 45,
       "width": 64,
-	    "flip": true
+	  "slice": -1
     },
-	{ "angle": 225,
+	{ "angle": 45,
       "width": 64,
-	    "flip": true
+	  "slice": 0
     },
-	{  "angle": 315,
+	{ "angle": 45,
       "width": 64,
-	    "flip": true
+	  "slice": 1
     }
   ]
 }

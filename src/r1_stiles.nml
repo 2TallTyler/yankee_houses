@@ -1,0 +1,67 @@
+
+// Begin r1_stiles
+
+spriteset (spr_r1_stiles, "src/gfx/r1_stiles_8bpp.png") {
+	template_z64(0,0)
+}
+
+spriteset (spr_r1_stiles_snow, "src/gfx/r1_stiles_snow_8bpp.png") {
+	template_z64(0,0)
+}
+
+spritelayout sprlay_r1_stiles_norm {
+	ground {
+		sprite: LOAD_TEMP(0) + LOAD_TEMP(2);
+		
+	}
+	building {
+		sprite: spr_r1_stiles(LOAD_TEMP(1));
+		recolour_mode: RECOLOUR_REMAP; 
+		palette: PALETTE_USE_DEFAULT;
+	}
+}
+
+spritelayout sprlay_r1_stiles_snow {
+	ground {
+		sprite: LOAD_TEMP(0) + LOAD_TEMP(2);
+	}
+	building {
+		sprite: spr_r1_stiles_snow(LOAD_TEMP(1));
+		recolour_mode: RECOLOUR_REMAP; 
+		palette: PALETTE_USE_DEFAULT;
+	}
+}
+
+switch (FEAT_HOUSES, SELF, switch_r1_stiles_sprites, [ 
+ 	// Check for snow and set the groundsprite with the proper slope in temporary variable 0
+ 	STORE_TEMP(GROUNDSPRITE_NORMAL, 0),
+	STORE_TEMP(slope_to_sprite_offset(nearby_tile_slope(0,0)), 2),
+ 	STORE_TEMP(terrain_type == TILETYPE_SNOW ? GROUNDSPRITE_SNOW : LOAD_TEMP(0), 0),
+	// Check the rotation of the house
+	STORE_TEMP(switch_road_adj_se(), 1),
+	terrain_type == TILETYPE_SNOW])
+	{1: sprlay_r1_stiles_snow; sprlay_r1_stiles_norm;}
+
+item(FEAT_HOUSES, item_r1_stiles, -1, HOUSE_SIZE_1X1){
+	property {
+		substitute: 06;
+		name: TTD_STR_TOWN_BUILDING_NAME_HOUSES_1;
+		population: 30;
+		accepted_cargos: [[PASS, 4],[MAIL, 2]];
+		local_authority_impact: 80;
+		removal_cost_multiplier: 80;
+		probability: 1;
+		years_available: [1990,0xFFFF];
+		minimum_lifetime: 2;
+		availability_mask: [ALL_TOWNZONES & ~bitmask(TOWNZONE_CENTRE), ALL_CLIMATES | bitmask(ABOVE_SNOWLINE)];
+		
+		}
+	graphics {
+		default: switch_r1_stiles_sprites;
+		construction_check: func_sloped_right();
+		foundations: CB_RESULT_NO_FOUNDATIONS;
+		colour: rand_switch_recolor_r1;
+	}
+}
+
+// End r1_stiles
